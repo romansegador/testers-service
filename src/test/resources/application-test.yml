@@ -1,0 +1,3 @@
+booksclient:
+  ribbon:
+    listOfServers: localhost:36000

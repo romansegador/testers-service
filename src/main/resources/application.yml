@@ -1,0 +1,10 @@
+server:
+  port: 32501
+
+spring:
+  jackson:
+    default-property-inclusion: non_null
+
+booksclient:
+  ribbon:
+    listOfServers: localhost:32500
