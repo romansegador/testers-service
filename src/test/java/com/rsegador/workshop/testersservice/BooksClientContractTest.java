@@ -17,6 +17,7 @@ import org.springframework.test.context.ActiveProfiles;
 
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.*;
 import static org.springframework.web.bind.annotation.RequestMethod.*;
 
 @ExtendWith(PactConsumerTestExt.class)
@@ -50,7 +51,7 @@ public class BooksClientContractTest {
     void pactForBooksAvailableForAnAuthor(){
         List<Book> booksReceived = booksClient.getBooksByAuthor("testersFirstName", "testersLastName");
 
-        Assertions.assertThat(booksReceived).containsExactly(TestExpectations.book);
+        assertThat(booksReceived).containsExactly(TestExpectations.book);
 
     }
 
