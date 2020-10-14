@@ -8,7 +8,7 @@ import au.com.dius.pact.core.model.RequestResponsePact;
 import au.com.dius.pact.core.model.annotations.Pact;
 import com.rsegador.workshop.testersservice.clients.BooksClient;
 import com.rsegador.workshop.testersservice.dto.Book;
-import org.assertj.core.api.Assertions;
+import feign.FeignException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +46,33 @@ public class BooksClientContractTest {
                 .toPact();
     }
 
+    @Pact(consumer = "testers-service")
+    public RequestResponsePact noBooksAvailable(PactDslWithProvider builder) {
+        return builder
+                .given("no books available for an author")
+                .uponReceiving("A request to retrieve the books for a tester without books")
+                    .path("/api/books/byauthor")
+                    .method(GET.name())
+                    .matchQuery("firstName", ".*", "testersFirstName")
+                    .matchQuery("lastName", ".*", "testersLastName")
+                .willRespondWith()
+                    .status(404)
+                .toPact();
+    }
+
+
+    @Pact(consumer = "testers-service")
+    public RequestResponsePact badBooksRequest(PactDslWithProvider builder) {
+        return builder
+                .given("bad request for an author books")
+                .uponReceiving("A request to retrieve the books without the needed parameters")
+                    .path("/api/books/byauthor")
+                    .method(GET.name())
+                .willRespondWith()
+                    .status(400)
+                .toPact();
+    }
+
     @Test
     @PactTestFor(pactMethod = "booksAvailable")
     void pactForBooksAvailableForAnAuthor(){
@@ -53,6 +80,23 @@ public class BooksClientContractTest {
 
         assertThat(booksReceived).containsExactly(TestExpectations.book);
 
+    }
+
+    @Test
+    @PactTestFor(pactMethod = "noBooksAvailable")
+    void pactForNoBooksAvailableForAnAuthor(){
+        assertThatExceptionOfType(FeignException.NotFound.class).isThrownBy( () ->
+                booksClient.getBooksByAuthor("testersFirstName", "testersLastName"))
+                .withMessageContaining("[404 Not Found] during [GET] to " +
+                        "[http://booksclient/api/books/byauthor?firstName=testersFirstName&lastName=testersLastName]");
+    }
+
+    @Test
+    @PactTestFor(pactMethod = "badBooksRequest")
+    void pactForBadBooksRequestForAnAuthor(){
+        assertThatExceptionOfType(FeignException.BadRequest.class).isThrownBy(() ->
+                booksClient.getBooksByAuthor(null, null)).withMessageContaining("[400 Bad Request] during [GET] to " +
+                "[http://booksclient/api/books/byauthor]");
     }
 
     interface TestExpectations {
