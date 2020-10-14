@@ -64,7 +64,7 @@ public class BooksClientContractTest {
     @Pact(consumer = "testers-service")
     public RequestResponsePact badBooksRequest(PactDslWithProvider builder) {
         return builder
-                .given("bad request for an author books")
+                // No Given needed, as is the default behavior when parameters are not send
                 .uponReceiving("A request to retrieve the books without the needed parameters")
                     .path("/api/books/byauthor")
                     .method(GET.name())
