@@ -1,10 +1,26 @@
+
 server:
   port: 32501
 
 spring:
   jackson:
     default-property-inclusion: non_null
+  application:
+    name: testers-service
+  kafka:
+    producer:
+      properties:
+        spring:
+          json:
+            add:
+              type:
+                headers: false
+    bootstrap-servers: http://172.25.13.44:9092
 
 booksclient:
   ribbon:
     listOfServers: localhost:32500
+
+log:
+  topic:
+    name: testers-service-activity

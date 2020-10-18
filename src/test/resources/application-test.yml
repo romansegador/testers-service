@@ -1,3 +1,7 @@
 booksclient:
   ribbon:
     listOfServers: localhost:36000
+
+pactbroker:
+  host: localhost
+  port: 9080
