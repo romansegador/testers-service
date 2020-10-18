@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                    sh 'mvn clean verify'
+                    sh 'mvn clean verify -Dpact.verifier.publishResults=true -Dpactbroker.host=${PACT_BROKER_HOST} -Dpactbroker.port=${PACT_BROKER_PORT} -Dpact.provider.version=${GIT_COMMIT}'
                     sh 'pact-broker publish --consumer-app-version ${GIT_COMMIT} --broker-base-url "${PACT_BROKER_HOST}:${PACT_BROKER_PORT}" ./target/pacts --tag build'
             }
         }
