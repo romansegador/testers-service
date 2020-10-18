@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 
 import static java.util.stream.Collectors.*;
 import static org.springframework.util.CollectionUtils.isEmpty;
@@ -26,8 +27,8 @@ public class TestersService {
     }
 
     private Tester enrichWithBooks(Tester tester) {
-        List<Book> books = booksClient.getBooksByAuthor(tester.getFirstName(), tester.getLastName());
-        return isEmpty(books) ? tester :
-               tester.withBooks(books.stream().map(Book::getTitle).collect(toList()));
+
+        Optional<List<Book>> books = booksClient.getBooksByAuthor(tester.getFirstName(), tester.getLastName());
+        return books.isPresent() ? tester.withBooks(books.get().stream().map(Book::getTitle).collect(toList())) : tester;
     }
 }

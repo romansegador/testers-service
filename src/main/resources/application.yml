@@ -15,7 +15,7 @@ spring:
             add:
               type:
                 headers: false
-    bootstrap-servers: http://172.25.13.44:9092
+    bootstrap-servers: localhost:9092
 
 booksclient:
   ribbon:

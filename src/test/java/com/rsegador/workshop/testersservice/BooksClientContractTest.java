@@ -16,6 +16,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.springframework.web.bind.annotation.RequestMethod.*;
@@ -76,19 +77,19 @@ public class BooksClientContractTest {
     @Test
     @PactTestFor(pactMethod = "booksAvailable")
     void pactForBooksAvailableForAnAuthor(){
-        List<Book> booksReceived = booksClient.getBooksByAuthor("testersFirstName", "testersLastName");
+        Optional<List<Book>> booksReceived = booksClient.getBooksByAuthor("testersFirstName", "testersLastName");
 
-        assertThat(booksReceived).containsExactly(TestExpectations.book);
+        assertThat(booksReceived).isPresent();
+        assertThat(booksReceived.get()).containsExactly(TestExpectations.book);
 
     }
 
     @Test
     @PactTestFor(pactMethod = "noBooksAvailable")
     void pactForNoBooksAvailableForAnAuthor(){
-        assertThatExceptionOfType(FeignException.NotFound.class).isThrownBy( () ->
-                booksClient.getBooksByAuthor("testersFirstName", "testersLastName"))
-                .withMessageContaining("[404 Not Found] during [GET] to " +
-                        "[http://booksclient/api/books/byauthor?firstName=testersFirstName&lastName=testersLastName]");
+        Optional<List<Book>> booksReceived = booksClient.getBooksByAuthor("testersFirstName", "testersLastName");
+
+        assertThat(booksReceived).isNotPresent();
     }
 
     @Test

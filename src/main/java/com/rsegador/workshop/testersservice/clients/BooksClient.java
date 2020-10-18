@@ -6,11 +6,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
+import java.util.Optional;
 
-@FeignClient(name = "booksclient")
+@FeignClient(name = "booksclient", decode404 = true)
 public interface BooksClient {
 
     @GetMapping("/api/books/byauthor")
-    List<Book> getBooksByAuthor(@RequestParam String firstName,
-                                @RequestParam String lastName);
+    Optional<List<Book>> getBooksByAuthor(@RequestParam String firstName,
+                                          @RequestParam String lastName);
 }
