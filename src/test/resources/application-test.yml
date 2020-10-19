@@ -4,4 +4,4 @@ booksclient:
 
 pactbroker:
   host: localhost
-  port: 9080
+  port: 9292
