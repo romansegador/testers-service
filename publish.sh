@@ -1,6 +1,6 @@
 #!/bin/bash
 
-PACT_BROKER_URL="http://localhost:9292"
+PACT_BROKER_URL="http://ip172-18-0-60-bvd3717p2ffg00f6oca0-9292.direct.labs.play-with-docker.com/"
 GIT_VERSION=$(eval "git rev-parse HEAD")
 
 docker run --rm \

@@ -75,6 +75,7 @@ public class BooksClientContractTest {
                 .toPact();
     }
 
+
     @Test
     @PactTestFor(pactMethod = "booksAvailable")
     void pactForBooksAvailableForAnAuthor(){
@@ -100,6 +101,8 @@ public class BooksClientContractTest {
                 booksClient.getBooksByAuthor(null, null)).withMessageContaining("[400 Bad Request] during [GET] to " +
                 "[http://booksclient/api/books/byauthor]");
     }
+
+
 
     interface TestExpectations {
         Book book = Book.builder()
