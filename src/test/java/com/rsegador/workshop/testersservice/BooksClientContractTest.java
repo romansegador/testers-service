@@ -43,7 +43,8 @@ public class BooksClientContractTest {
                     .status(200)
                     .body(PactDslJsonArray
                             .arrayMinLike(1)
-                                .stringType("title", "This is the title of the book"))
+                                .stringType("title", "This is the title of the book")
+                    )
                 .toPact();
     }
 

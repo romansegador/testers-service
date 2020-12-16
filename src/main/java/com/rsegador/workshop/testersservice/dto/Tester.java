@@ -14,6 +14,6 @@ public class Tester {
     String firstName;
     String lastName;
     String twitter;
-    List<String> books;
+    List<Book> books;
 
 }

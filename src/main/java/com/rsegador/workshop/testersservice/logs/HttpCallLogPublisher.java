@@ -3,6 +3,7 @@ package com.rsegador.workshop.testersservice.logs;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.SendResult;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import org.springframework.util.concurrent.ListenableFuture;
 import org.springframework.util.concurrent.ListenableFutureCallback;
@@ -19,6 +20,7 @@ public class HttpCallLogPublisher {
         this.kafkaTemplate = kafkaTemplate;
     }
 
+    @Async
     public void sendLogMessage(HttpCallLog httpCallLog) {
         ListenableFuture<SendResult<String, HttpCallLog>> future = kafkaTemplate.send(kafkaTopic, httpCallLog);
 

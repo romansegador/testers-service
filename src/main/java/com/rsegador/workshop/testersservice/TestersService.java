@@ -29,6 +29,6 @@ public class TestersService {
     private Tester enrichWithBooks(Tester tester) {
 
         Optional<List<Book>> books = booksClient.getBooksByAuthor(tester.getFirstName(), tester.getLastName());
-        return books.isPresent() ? tester.withBooks(books.get().stream().map(Book::getTitle).collect(toList())) : tester;
+        return books.isPresent() ? tester.withBooks(books.get()) : tester;
     }
 }

@@ -45,6 +45,7 @@ import static org.junit.jupiter.api.TestInstance.Lifecycle.PER_CLASS;
 @PactBroker
 @SpringBootTest
 @ActiveProfiles("test")
+@Disabled
 public class TestersServiceProducerPactTest {
 
     @Autowired
