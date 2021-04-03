@@ -99,7 +99,7 @@ public class TestersServiceProducerPactTest {
         httpCallLogPublisher.sendLogMessage(testMessage);
 
         // receive the value from the consumer configured in the set up.
-        ConsumerRecord<String, String> singleRecord = records.poll(100, TimeUnit.MILLISECONDS);
+        ConsumerRecord<String, String> singleRecord = records.poll(5, TimeUnit.SECONDS);
         assertThat(singleRecord).isNotNull();
 
         // return the value to Pact
