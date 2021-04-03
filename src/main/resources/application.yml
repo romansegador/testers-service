@@ -15,11 +15,12 @@ spring:
             add:
               type:
                 headers: false
-    bootstrap-servers: localhost:9092
+    bootstrap-servers: broker:29092,localhost:9092
 
 booksclient:
   ribbon:
-    listOfServers: localhost:32500
+    listOfServers: books-service:32500,localhost:32800
+    ServerListRefreshInterval: 3000
 
 log:
   topic:

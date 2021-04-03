@@ -3,6 +3,7 @@ package com.rsegador.workshop.testersservice;
 import au.com.dius.pact.provider.PactVerifyProvider;
 import au.com.dius.pact.provider.junit5.MessageTestTarget;
 import au.com.dius.pact.provider.junit5.PactVerificationContext;
+import au.com.dius.pact.provider.junitsupport.IgnoreNoPactsToVerify;
 import au.com.dius.pact.provider.junitsupport.Provider;
 import au.com.dius.pact.provider.junitsupport.loader.PactBroker;
 import au.com.dius.pact.provider.spring.junit5.PactVerificationSpringProvider;
@@ -43,9 +44,9 @@ import static org.junit.jupiter.api.TestInstance.Lifecycle.PER_CLASS;
 @ExtendWith(SpringExtension.class)
 @Provider("testers-service")
 @PactBroker
+@IgnoreNoPactsToVerify
 @SpringBootTest
 @ActiveProfiles("test")
-@Disabled
 public class TestersServiceProducerPactTest {
 
     @Autowired
@@ -59,13 +60,17 @@ public class TestersServiceProducerPactTest {
 
     @BeforeEach
     void before(PactVerificationContext context) {
-        context.setTarget(new MessageTestTarget());
+        if(context != null) {
+            context.setTarget(new MessageTestTarget());
+        }
     }
 
     @TestTemplate
     @ExtendWith(PactVerificationSpringProvider.class)
     void testTemplate(PactVerificationContext context) {
-        context.verifyInteraction();
+        if(context != null) {
+            context.verifyInteraction();
+        }
     }
 
     @BeforeAll
