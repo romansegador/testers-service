@@ -1,4 +1,4 @@
-name: pipeline
+name: manual-deployments
 on: [workflow_dispatch]
 
 jobs:
