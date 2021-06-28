@@ -44,7 +44,6 @@ public class BooksClientContractTest {
                     .body(PactDslJsonArray
                             .arrayMinLike(1)
                                 .stringType("title", "This is the title of the book")
-                                .stringType("language", "spanish")
                     )
                 .toPact();
     }
@@ -108,7 +107,6 @@ public class BooksClientContractTest {
     interface TestExpectations {
         Book book = Book.builder()
                 .title("This is the title of the book")
-                .language("spanish")
                 .build();
     }
 }
