@@ -3,5 +3,7 @@ booksclient:
     listOfServers: localhost:36000
 
 pactbroker:
-  host: localhost
-  port: 9292
+  host: "rsegador.pactflow.io"
+  protocol: "https"
+  auth:
+    token: "9Q5vs3J_Ix_VvukASTcEeA"
